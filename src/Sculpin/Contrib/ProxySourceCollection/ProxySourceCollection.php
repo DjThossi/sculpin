@@ -110,4 +110,10 @@ class ProxySourceCollection implements \ArrayAccess, \Iterator, \Countable
     {
         uasort($this->items, array($this->sorter, 'sort'));
     }
+
+    public function sortReverse()
+    {
+        $this->sort();
+        $this->items = array_reverse($this->items, true);
+    }
 }

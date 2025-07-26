@@ -11,6 +11,7 @@
 
 namespace Sculpin\Bundle\PaginationBundle;
 
+use Sculpin\Contrib\ProxySourceCollection\ProxySourceCollection;
 use Sculpin\Core\DataProvider\DataProviderManager;
 use Sculpin\Core\Generator\GeneratorInterface;
 use Sculpin\Core\Source\SourceInterface;
@@ -80,6 +81,15 @@ class PaginationGenerator implements GeneratorInterface
         }
 
         $maxPerPage = isset($config['max_per_page']) ? $config['max_per_page'] : $this->maxPerPage;
+
+        if(isset($config['reverse']) && $config['reverse'] === true) {
+            /** @var $data ProxySourceCollection */
+            if(is_object($data)) {
+                $data->sortReverse();
+            } else {
+                $data = array_reverse($data);
+            }
+        }
 
         $slices = array();
         $slice = array();
